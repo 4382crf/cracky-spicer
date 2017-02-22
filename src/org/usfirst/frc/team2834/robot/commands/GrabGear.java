@@ -1,41 +1,43 @@
 package org.usfirst.frc.team2834.robot.commands;
 
 import org.usfirst.frc.team2834.robot.Robot;
+import org.usfirst.frc.team2834.robot.subsystems.GearGrab;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Basic driving method for two joysticks
  */
-public class HaloDrive extends Command {
+public class GrabGear extends Command {
+
+	private double position;
 	
-    public HaloDrive() {
-    	super("Halo Drive");
-        requires(Robot.drivetrain);
+    public GrabGear(boolean out) {
+    	super("Pusher Out: [" + out + "]");
+        requires(Robot.geargrab);
+        position = out ? GearGrab.OPEN : GearGrab.CLOSE;
     }
 
     // Called just before this Command runs the first time
     @Override
 	protected void initialize() {
-    	Robot.drivetrain.setZero();
+    	Robot.geargrab.setPusherPosition(position);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {
-    	Robot.drivetrain.haloDrive(-Robot.oi.leftDrive.getY(), -Robot.oi.rightDrive.getX(), false);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
 	protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     @Override
 	protected void end() {
-    	Robot.drivetrain.setZero();
+    	//Robot.pusher.setPusherPosition(Pusher.OFF);
     }
 
     // Called when another command which requires one or more of the same

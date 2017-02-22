@@ -9,13 +9,6 @@ import edu.wpi.first.wpilibj.tables.ITable;
 
 
 /**
- * @author Adam Raine
- * We use this class to use an analog signal that provides information about the
- * angle of a shaft, and use it to determine the position of the shaft.
- * 
- * By noticing when the analog signal has a large dropoff, it is possible to
- * accumulate the cycles of the analog signal into one, continuous function
- * for the position of a shaft.
  */
 public class AnalogAbsoluteEncoder implements Runnable, PIDSource, LiveWindowSendable {
 	
@@ -43,6 +36,7 @@ public class AnalogAbsoluteEncoder implements Runnable, PIDSource, LiveWindowSen
 		new Thread(this, "Analog Absolute Encoder Thread").start();
 	}
 
+	@Override
 	public void run() {
 		while(running) {
 			double offsetVoltage = ai.getAverageVoltage() - offset;
@@ -95,14 +89,17 @@ public class AnalogAbsoluteEncoder implements Runnable, PIDSource, LiveWindowSen
 	}
 
 	//Implemented methods from PIDSource so this class can easily operate as a PIDSource
+	@Override
 	public void setPIDSourceType(PIDSourceType pidSource) {
 		this.pidSource = pidSource;
 	}
 
+	@Override
 	public PIDSourceType getPIDSourceType() {
 		return pidSource;
 	}
 
+	@Override
 	public double pidGet() {
 		switch(pidSource) {
 			case kRate:

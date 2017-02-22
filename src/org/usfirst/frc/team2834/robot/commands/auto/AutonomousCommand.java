@@ -1,24 +1,38 @@
 package org.usfirst.frc.team2834.robot.commands.auto;
 
+import org.usfirst.frc.team2834.robot.commands.GrabGear;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- * This is a really big class so hold onto your ass.
- * 
- * It basically takes into account every situation we will be in for autonomous and
- * draws the best possible course for each one.
- * 
  */
 public class AutonomousCommand extends CommandGroup {
     
     /**
-     * @param mode What is the robot going to do?  Will it shoot?  will it cross a defense?  will it do jack shit?
-     * @param position Mostly determines what rough angle to rotate before using vision tracking.
-     * @param defense If and when the robot reaches a defense, which defense program should it use?
-     * @param direction What direction is the robot facing?
      */
-    public AutonomousCommand() {
-    	//addSequential(new five_second());
+    public AutonomousCommand(int position, boolean side) {
+    	if (position == 3){
+    		//left
+    		addSequential(new StopWhenFar(-0.7, 0, 65, 3));
+        	addSequential(new RotateAngle(60, 0)); 
+        	addSequential(new StopIfClose (-0.3, 0, 20, 3));
+    	}
+    	if (position == 2){ 
+    		//middle
+    		addSequential(new GrabGear(true));
+    		addSequential(new StopWhenFar(-0.1, 0, 40, 3));
+    		addSequential(new TimedHaloDrive(.5, 0 ,false, .1));
+    		addSequential(new StopWhenFar(-0.05, 0, 25, 3));
+    		addSequential(new TimedHaloDrive(.5, 0 ,false, .1));
+    		addSequential(new GrabGear(false));
+    		addSequential(new TimedHaloDrive(-.2, 0 ,false, 1));
+    		
+    	}
+    	if (position == 1){
+    		//right
+    		//addSequential(new StopWhenFar(-0.7, 0, 65, 3));
+        	addSequential(new RotateAngle(60, 0));
+        	//addSequential(new StopIfClose (-0.3, 0, 20, 3));
+    	}
     }
 }
-

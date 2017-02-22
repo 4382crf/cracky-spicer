@@ -3,20 +3,18 @@ package com;
 import org.usfirst.frc.team2834.robot.Robot;
 
 /**
- * @author Adam Raine
- *
- * This interface makes it easier on the programmer to send data to the dashboard.  It also
- * eliminates the error when SD values are initialized before the rest of the robot.
- * 
- * Any subsystem that needs to send specific data to the dashboard can implement
- * this interface.
- *
  */
 public interface DashboardSender {
 	
 	DashboardSender[] senders = {
 		Robot.drivetrain,
-		Robot.oi
+		Robot.oi,
+		Robot.distance,
+		Robot.angler,
+		Robot.agitator,
+		Robot.fakeshoot,
+		Robot.shooter,
+		Robot.geargrab
 	};
 	
 	static void sendPeriodicData() {

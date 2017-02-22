@@ -6,6 +6,7 @@ import org.usfirst.frc.team2834.robot.subsystems.*;
 
 import com.DashboardSender;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -23,6 +24,14 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
     public static Drivetrain drivetrain;
+    public static Distance distance;
+    public static Shooter shooter;
+    public static Angler angler;
+    public static Hanger hanger;
+    public static Agitator agitator;
+    public static GearGrab geargrab;
+    public static Intake intake;
+    public static FakeShoot fakeshoot;
     
     private CommandGroup auto;
     /**
@@ -32,11 +41,26 @@ public class Robot extends IterativeRobot {
     
     public Robot() {
 		drivetrain = new Drivetrain();
+		distance = new Distance();
+		shooter = new Shooter();
+		angler = new Angler(); 
+		hanger = new Hanger();
+		agitator = new Agitator();
+		geargrab = new GearGrab();
+		intake = new Intake();
+		fakeshoot = new FakeShoot();
     }
     
-    public void robotInit() {
+    public void setAnglePower(double power){
+    	angler.setPower(power);
+    }
+    
+    @Override
+	public void robotInit() {
     	oi = new OI();
     	DashboardSender.sendInitData();
+    	CameraServer.getInstance().startAutomaticCapture();
+    	
     }
 	
 	/**
@@ -44,9 +68,11 @@ public class Robot extends IterativeRobot {
      * You can use it to reset any subsystem information you want to clear when
 	 * the robot is disabled.
      */
-    public void disabledInit(){
+    @Override
+	public void disabledInit(){
     }
 	
+	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		DashboardSender.sendPeriodicData();
@@ -55,21 +81,29 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called once before autonomous period starts
 	 */
-    public void autonomousInit() {
+    @Override
+	public void autonomousInit() {
     	
-    	auto = new AutonomousCommand();
+    	int position = (int) SmartDashboard.getNumber("Position", 0);
+    	//true = Blue
+    	boolean side = SmartDashboard.getBoolean("Side", false);
+    	
+    	auto = new AutonomousCommand(position, side);
+    	
 		if (auto != null) auto.start();
     }
 
     /**
      * This function is called periodically during autonomous
      */
-    public void autonomousPeriodic() {
+    @Override
+	public void autonomousPeriodic() {
         Scheduler.getInstance().run();
         DashboardSender.sendPeriodicData();
     }
 
-    public void teleopInit() {
+    @Override
+	public void teleopInit() {
     	//vision.useShooterView();
     	//new FreeShooter().start();
         if (auto != null) auto.cancel();
@@ -78,7 +112,8 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
-    public void teleopPeriodic() {
+    @Override
+	public void teleopPeriodic() {
         Scheduler.getInstance().run();
         DashboardSender.sendPeriodicData();
     }
@@ -86,7 +121,8 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during test mode
      */
-    public void testPeriodic() {
+    @Override
+	public void testPeriodic() {
         LiveWindow.run();
     }
 }

@@ -5,48 +5,46 @@ import org.usfirst.frc.team2834.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Basic command to run the Drivetrain for a period of time in Halo Drive.
+ *
  */
-public class TimedHaloDrive extends Command {
+public class StopWhenFar extends Command {
 	
 	private double power;
 	private double rotate;
-	private boolean holdRotation;
+	private double distance;
+	private int unit;
 	
-    public TimedHaloDrive(double power, double rotate, boolean holdRotation, double seconds) {
-    	super("Timed Halo Drive: [" + power + "] [" + rotate + "] [" + holdRotation + "] [" + seconds + "]", seconds);
+    public StopWhenFar(double power, double rotate, double distance, int unit) {
+    	super("Stop when far: [" + power + "] [" + rotate);
         requires(Robot.drivetrain);
         this.power = power;
         this.rotate = rotate;
-        this.holdRotation = holdRotation;
+        this.distance = distance;
+        this.unit = unit;
+        
     }
 
     // Called just before this Command runs the first time
     @Override
 	protected void initialize() {
-    	if(holdRotation) {
-    		Robot.drivetrain.setSetpoint(Robot.drivetrain.getYaw());
-    	}
-    	Robot.drivetrain.setZero();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {
-    	Robot.drivetrain.haloDrive(-power, rotate, holdRotation);
+    	Robot.drivetrain.haloDrive(power, rotate, false);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
 	protected boolean isFinished() {
-        return isTimedOut();
+    	return Robot.distance.isFar(distance, unit);
     }
 
     // Called once after isFinished returns true
     @Override
 	protected void end() {
-    	Robot.drivetrain.disable();
-    	Robot.drivetrain.setZero();
+    	Robot.drivetrain.haloDrive(0, 0.0, false);
     }
 
     // Called when another command which requires one or more of the same

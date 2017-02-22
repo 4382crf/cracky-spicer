@@ -5,41 +5,41 @@ import org.usfirst.frc.team2834.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Basic command to run the Drivetrain for a period of time in Halo Drive.
+ * Rotates a certain degree relative to the current robot position
  */
-public class TimedHaloDrive extends Command {
+public class RotateAngle extends Command {
 	
-	private double power;
-	private double rotate;
-	private boolean holdRotation;
-	
-    public TimedHaloDrive(double power, double rotate, boolean holdRotation, double seconds) {
-    	super("Timed Halo Drive: [" + power + "] [" + rotate + "] [" + holdRotation + "] [" + seconds + "]", seconds);
+	private double angle;
+	private double forwardPower;
+
+    public RotateAngle(double angle, double forwardPower) {
+    	super("Rotate Angle: [" + angle + "] [" + forwardPower + "]", 10);
         requires(Robot.drivetrain);
-        this.power = power;
-        this.rotate = rotate;
-        this.holdRotation = holdRotation;
+        this.angle = angle;
+        this.forwardPower = forwardPower;
     }
 
     // Called just before this Command runs the first time
     @Override
 	protected void initialize() {
-    	if(holdRotation) {
-    		Robot.drivetrain.setSetpoint(Robot.drivetrain.getYaw());
-    	}
+    	Robot.drivetrain.rezero();
+    	Robot.drivetrain.reset();
     	Robot.drivetrain.setZero();
+    	Robot.drivetrain.setSetpoint(Robot.drivetrain.getYaw());
+    	Robot.drivetrain.setSetpointRelative(angle);
+    	Robot.drivetrain.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {
-    	Robot.drivetrain.haloDrive(-power, rotate, holdRotation);
+    	Robot.drivetrain.haloDrive(-forwardPower, 0.0, true);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
 	protected boolean isFinished() {
-        return isTimedOut();
+        return Robot.drivetrain.onTarget() || isTimedOut();
     }
 
     // Called once after isFinished returns true

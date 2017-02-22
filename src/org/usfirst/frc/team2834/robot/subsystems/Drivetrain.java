@@ -45,7 +45,8 @@ public class Drivetrain extends PIDSubsystem implements RobotMap, DashboardSende
     	getPIDController().setToleranceBuffer(5);
     	
     	setReverse(true);
-    	gyro = new AHRS(SerialPort.Port.kMXP, AHRS.SerialDataType.kProcessedData, (byte) 50);
+    	gyro = new AHRS(SerialPort.Port.kUSB);
+    	//gyro = new AHRS(SerialPort.Port.kMXP, AHRS.SerialDataType.kProcessedData, (byte) 50);
     	gyro.zeroYaw();
     }
 
@@ -57,9 +58,9 @@ public class Drivetrain extends PIDSubsystem implements RobotMap, DashboardSende
     	if(reverse) {
     		rotate *= -1.0;
     	}
-    	double right = power + rotate;
-    	double left = power - rotate;
-    	setOutput(left, right, true);
+    	double left = power + rotate;
+    	double right = power - rotate;
+    	setOutput(right, left, true);
     }
     
 	@Override
@@ -72,12 +73,12 @@ public class Drivetrain extends PIDSubsystem implements RobotMap, DashboardSende
 	}
 	
     public void setOutput(double left, double right, boolean scaleCenter) {
-    	motors[0].set(left);
-    	motors[1].set(left);
-    	motors[2].set(left);
-    	motors[3].set(right);
-    	motors[4].set(right);
-    	motors[5].set(right);
+    	motors[0].set(right);
+    	motors[1].set(right);
+    	motors[2].set(right);
+    	motors[3].set(left);
+    	motors[4].set(left);
+    	motors[5].set(left);
     }
     
     /**
@@ -126,6 +127,7 @@ public class Drivetrain extends PIDSubsystem implements RobotMap, DashboardSende
     	return gyro.getRoll();
     }
     
+	@Override
 	public void initDefaultCommand() {
         setDefaultCommand(new HaloDrive());
     }

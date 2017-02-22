@@ -1,29 +1,33 @@
 package org.usfirst.frc.team2834.robot.commands;
 
 import org.usfirst.frc.team2834.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Basic driving method for two joysticks
+ * Sets the speed of the shooter wheels to specific encoder values.
  */
-public class HaloDrive extends Command {
+public class ShooterSetSetpoint extends Command {
 	
-    public HaloDrive() {
-    	super("Halo Drive");
-        requires(Robot.drivetrain);
+
+	double setpoint = (double) SmartDashboard.getNumber("Shooter Speed", 0);
+    
+    public ShooterSetSetpoint(double setpoint) {
+    	super("Shooter Set Setpoint: [" + setpoint + "]");
+    	requires(Robot.shooter);
+        this.setpoint = setpoint;
     }
 
     // Called just before this Command runs the first time
     @Override
 	protected void initialize() {
-    	Robot.drivetrain.setZero();
+    
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {
-    	Robot.drivetrain.haloDrive(-Robot.oi.leftDrive.getY(), -Robot.oi.rightDrive.getX(), false);
+    	Robot.shooter.setTalonSpeed(setpoint);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,7 +39,7 @@ public class HaloDrive extends Command {
     // Called once after isFinished returns true
     @Override
 	protected void end() {
-    	Robot.drivetrain.setZero();
+    	
     }
 
     // Called when another command which requires one or more of the same

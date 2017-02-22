@@ -5,37 +5,42 @@ import org.usfirst.frc.team2834.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Basic driving method for two joysticks
+ * Command used to automatically position the angler to a specific encoder reading
  */
-public class HaloDrive extends Command {
+public class AnglerGotoSetpoint extends Command {
 	
-    public HaloDrive() {
-    	super("Halo Drive");
-        requires(Robot.drivetrain);
+	private double setpoint;
+
+    public AnglerGotoSetpoint(double setpoint) {
+        super("Angler goto Setpoint: [" + setpoint + "]");
+        requires(Robot.angler);
+        this.setpoint = setpoint;
     }
 
     // Called just before this Command runs the first time
     @Override
 	protected void initialize() {
-    	Robot.drivetrain.setZero();
+    	Robot.angler.reset();
+    	Robot.angler.setpoint(0.0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {
-    	Robot.drivetrain.haloDrive(-Robot.oi.leftDrive.getY(), -Robot.oi.rightDrive.getX(), false);
+    	Robot.angler.setpoint(setpoint);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
 	protected boolean isFinished() {
-        return false;
+    	return Robot.angler.setpoint(setpoint);
     }
 
     // Called once after isFinished returns true
     @Override
 	protected void end() {
-    	Robot.drivetrain.setZero();
+    	Robot.angler.reset();
+    	Robot.angler.setpoint(0.0);
     }
 
     // Called when another command which requires one or more of the same

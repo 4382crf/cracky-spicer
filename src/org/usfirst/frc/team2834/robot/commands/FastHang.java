@@ -5,25 +5,24 @@ import org.usfirst.frc.team2834.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Basic driving method for two joysticks
+ *
  */
-public class HaloDrive extends Command {
-	
-    public HaloDrive() {
-    	super("Halo Drive");
-        requires(Robot.drivetrain);
+public class FastHang extends Command {
+
+    public FastHang() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     @Override
 	protected void initialize() {
-    	Robot.drivetrain.setZero();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {
-    	Robot.drivetrain.haloDrive(-Robot.oi.leftDrive.getY(), -Robot.oi.rightDrive.getX(), false);
+    	Robot.hanger.hang(.9);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,7 +34,7 @@ public class HaloDrive extends Command {
     // Called once after isFinished returns true
     @Override
 	protected void end() {
-    	Robot.drivetrain.setZero();
+    	Robot.hanger.hang(0);
     }
 
     // Called when another command which requires one or more of the same
