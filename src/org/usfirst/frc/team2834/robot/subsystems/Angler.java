@@ -41,10 +41,10 @@ public class Angler extends PIDSubsystem implements RobotMap, DashboardSender {
     	boolean done = false;
     	while (currentValue != setpointValue){
     		if (setpointValue >= currentValue){
-    			anglerMotor.set(0.2);
+    			anglerMotor.set(0.3);
     		}
     		if (setpointValue <= currentValue){
-    			anglerMotor.set(-0.2);
+    			anglerMotor.set(-0.3);
     		}
     		if (setpointValue == currentValue){
     			anglerMotor.set(0);
@@ -52,7 +52,6 @@ public class Angler extends PIDSubsystem implements RobotMap, DashboardSender {
     		}
     	}
     	return done;
-    	
     }
     
     boolean currentPosition = false;
@@ -68,22 +67,15 @@ public class Angler extends PIDSubsystem implements RobotMap, DashboardSender {
     	return currentPosition;
     }
     
-    public boolean timeout(int milliseconds){
-    	boolean isFinished = false;
-    	try {
-			Thread.sleep(milliseconds);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	isFinished = true;
-    	return isFinished;
-    }
-    
     public int getEncoderCount(){
     	int encoderCount = anglerEncoder.get();
 		return encoderCount;
     	
+    }
+    
+    public boolean NotMoving(double current){
+    	boolean Move = false;
+    	return Move;
     }
     
     public void reset() {

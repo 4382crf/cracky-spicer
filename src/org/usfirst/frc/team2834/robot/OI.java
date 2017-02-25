@@ -8,6 +8,7 @@ import com.DashboardSender;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -34,6 +35,7 @@ public class OI implements RobotMap, DashboardSender {
 	public final JoystickButton Reverse;
 	public final JoystickButton reverseAgitate;
 	
+	@SuppressWarnings("deprecation")
 	public OI() {
 		//Initialize joysticks
 		rightDrive = new Joystick(RobotMap.RIGHT_DRIVE_USB);
@@ -55,14 +57,16 @@ public class OI implements RobotMap, DashboardSender {
 		
 		
 		//Set button functions
-		Setpoint.toggleWhenPressed(new ShooterSetSetpoint(1000));
+		Setpoint.toggleWhenPressed(new ShooterSetSetpoint(SmartDashboard.getNumber("Set Shooter Speed", 700)));
 		Hanger.whileHeld(new Hang());
 		Agitate.whileHeld(new Agitate(-0.8));
 		Intake.toggleWhenPressed(new IntakeBall());
 		Grab.whenPressed(new GrabGear(true));
 		Release.whenPressed(new GrabGear(false));
-		GearUp.whenPressed(new TimedAngle(-0.3, 2));
+		GearUp.whenPressed(new TimedAngle(-0.35, 2));
 		GearDown.whenPressed(new TimedAngle(0.3, 2));
+		//GearUp.whenPressed(new AngleSetpoint(-290));
+		//GearDown.whenPressed(new AngleSetpoint(290));
 		GearDown.whenPressed(new GrabGear(false));
 		FastHang.whileHeld(new FastHang());
 		Reverse.whileHeld(new Reverse());

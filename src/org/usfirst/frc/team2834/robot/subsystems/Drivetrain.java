@@ -37,7 +37,8 @@ public class Drivetrain extends PIDSubsystem implements RobotMap, DashboardSende
     private AHRS gyro;
     
     public Drivetrain() {
-    	super("Drivetrain", 0.001, 0.0001, 0.0);
+    	super("Drivetrain", SmartDashboard.getNumber("P Drivetrain", 0), SmartDashboard.getNumber("I Drivetrain", 0), SmartDashboard.getNumber("D Drivetrain", 0));
+    	//super("Drivetrain", 0.001, 0.0001, 0.0);
     	setInputRange(-180.0, 180.0);
     	setOutputRange(-1.0, 1.0);
     	getPIDController().setContinuous(true);
@@ -131,14 +132,6 @@ public class Drivetrain extends PIDSubsystem implements RobotMap, DashboardSende
 	public void initDefaultCommand() {
         setDefaultCommand(new HaloDrive());
     }
-
-	public boolean isUpSlope() {
-		return getPitch() > 5 || getRoll() > 5;
-	}
-	
-	public boolean isDownSlope() {
-		return getPitch() < -5 || getRoll() < -5;
-	}
 	
 	public boolean isStable() {
 		return Math.abs(gyro.getRawGyroX()) < 5 && Math.abs(gyro.getRawGyroY()) < 5;
@@ -181,11 +174,7 @@ public class Drivetrain extends PIDSubsystem implements RobotMap, DashboardSende
 		SmartDashboard.putNumber("Gyro Yaw", getYaw());
 		SmartDashboard.putNumber("Gyro Pitch", getPitch());
 		SmartDashboard.putBoolean("Gyro connected", gyro.isConnected());
-		SmartDashboard.putBoolean("Reverse", isReverse());
-		//SmartDashboard.putNumber("Auto Rotate", autoRotate);
-		//SmartDashboard.putBoolean("Gyro On Target", onTarget());
 		SmartDashboard.putNumber("Gyro Setpoint", getSetpoint());
-		//SmartDashboard.putBoolean("On Goal", Math.abs(Robot.vision.getGamma()) < TOLERANCE * Math.PI / 180.0);
 	}
 }
 

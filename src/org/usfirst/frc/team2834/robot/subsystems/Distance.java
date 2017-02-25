@@ -47,12 +47,12 @@ public class Distance extends Subsystem implements DashboardSender {
     	}
     	return distance;
     }
-    public boolean isClose(double distance, int unit) {
-		return getDistance(unit, 1) <= distance;
+    public boolean isClose(double distance, int unit, int side) {
+		return getDistance(unit, side) <= distance; 
 	}
     
-    public boolean isFar(double distance, int unit) {
-		return getDistance(unit, 0) >= distance;
+    public boolean isFar(double distance, int unit, int side) {
+		return getDistance(unit, side) >= distance;
 	}
 	@Override
 	public void dashboardInit() {

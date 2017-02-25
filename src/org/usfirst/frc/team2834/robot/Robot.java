@@ -19,6 +19,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
+ * 
+ * 
+  ______                                                                  
+ /      \                                                                 
+|  $$$$$$\ __    __   ______    ______    ______   ______ ____    ______  
+| $$___\$$|  \  |  \ /      \  /      \  /      \ |      \    \  /      \ 
+ \$$    \ | $$  | $$|  $$$$$$\|  $$$$$$\|  $$$$$$\| $$$$$$\$$$$\|  $$$$$$\
+ _\$$$$$$\| $$  | $$| $$  | $$| $$   \$$| $$    $$| $$ | $$ | $$| $$    $$
+|  \__| $$| $$__/ $$| $$__/ $$| $$      | $$$$$$$$| $$ | $$ | $$| $$$$$$$$
+ \$$    $$ \$$    $$| $$    $$| $$       \$$     \| $$ | $$ | $$ \$$     \
+  \$$$$$$   \$$$$$$ | $$$$$$$  \$$        \$$$$$$$ \$$  \$$  \$$  \$$$$$$$
+                    | $$                                                  
+                    | $$                                                  
+                     \$$                                                  
+
  */
 public class Robot extends IterativeRobot {
 
@@ -84,7 +99,8 @@ public class Robot extends IterativeRobot {
     @Override
 	public void autonomousInit() {
     	
-    	int position = (int) SmartDashboard.getNumber("Position", 0);
+    	//int position = (int) SmartDashboard.getNumber("Position", 0);
+    	int position = 2;
     	//true = Blue
     	boolean side = SmartDashboard.getBoolean("Side", false);
     	
@@ -94,7 +110,7 @@ public class Robot extends IterativeRobot {
     }
 
     /**
-     * This function is called periodically during autonomous
+     * 
      */
     @Override
 	public void autonomousPeriodic() {

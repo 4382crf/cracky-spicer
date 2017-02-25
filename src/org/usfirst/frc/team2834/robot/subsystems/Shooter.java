@@ -56,8 +56,8 @@ public class Shooter extends Subsystem implements RobotMap, DashboardSender {
     
     @Override
 	public void dashboardPeriodic() {
-    	SmartDashboard.putNumber("Shooter Speed", _talon.get());
-
+    	SmartDashboard.putNumber("Shooter Speed", _talon.getSpeed());
+    	SmartDashboard.putNumber("Shooter Power", _talon.getSpeed());
 	}
 
 	@Override

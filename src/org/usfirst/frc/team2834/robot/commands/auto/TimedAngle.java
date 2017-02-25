@@ -42,7 +42,12 @@ public class TimedAngle extends Command {
     @Override
 	protected void end() {
     	Robot.angler.reset();
-    	Robot.angler.setPower(0.0);
+    	if (power < 0){
+    		Robot.angler.setPower(-0.07);
+    	}
+    	if (power > 0){
+    		Robot.angler.setPower(0.0);
+    	}
     }
 
     // Called when another command which requires one or more of the same

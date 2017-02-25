@@ -13,15 +13,16 @@ public class StopWhenFar extends Command {
 	private double rotate;
 	private double distance;
 	private int unit;
+	private int side;
 	
-    public StopWhenFar(double power, double rotate, double distance, int unit) {
+    public StopWhenFar(double power, double rotate, double distance, int unit, int side) {
     	super("Stop when far: [" + power + "] [" + rotate);
         requires(Robot.drivetrain);
         this.power = power;
         this.rotate = rotate;
         this.distance = distance;
         this.unit = unit;
-        
+        this.side = side;
     }
 
     // Called just before this Command runs the first time
@@ -38,7 +39,7 @@ public class StopWhenFar extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
 	protected boolean isFinished() {
-    	return Robot.distance.isFar(distance, unit);
+    	return Robot.distance.isFar(distance, unit, side);
     }
 
     // Called once after isFinished returns true

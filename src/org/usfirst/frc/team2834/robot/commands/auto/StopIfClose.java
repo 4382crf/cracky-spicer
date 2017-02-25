@@ -13,14 +13,16 @@ public class StopIfClose extends Command {
 	private double rotate;
 	private double distance;
 	private int unit;
+	private int side;
 	
-    public StopIfClose(double power, double rotate, double distance, int unit) {
+    public StopIfClose(double power, double rotate, double distance, int unit, int side) {
     	super("Stop if close: [" + power + "] [" + rotate);
         requires(Robot.drivetrain);
         this.power = power;
         this.rotate = rotate;
         this.distance = distance;
         this.unit = unit;
+        this.side = side;
         
     }
 
@@ -38,7 +40,7 @@ public class StopIfClose extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
 	protected boolean isFinished() {
-    	return Robot.distance.isClose(distance, unit);
+    	return Robot.distance.isClose(distance, unit, side);
     }
 
     // Called once after isFinished returns true

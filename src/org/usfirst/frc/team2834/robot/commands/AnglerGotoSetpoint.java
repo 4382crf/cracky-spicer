@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AnglerGotoSetpoint extends Command {
 	
 	private double setpoint;
+	private double m_timeout = 3;
 
     public AnglerGotoSetpoint(double setpoint) {
         super("Angler goto Setpoint: [" + setpoint + "]");
@@ -22,6 +23,7 @@ public class AnglerGotoSetpoint extends Command {
 	protected void initialize() {
     	Robot.angler.reset();
     	Robot.angler.setpoint(0.0);
+    	setTimeout(m_timeout);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -33,7 +35,7 @@ public class AnglerGotoSetpoint extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
 	protected boolean isFinished() {
-    	return Robot.angler.setpoint(setpoint);
+    	return Robot.angler.setpoint(setpoint) || isTimedOut();
     }
 
     // Called once after isFinished returns true

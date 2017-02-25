@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterSetSetpoint extends Command {
 	
 
-	double setpoint = (double) SmartDashboard.getNumber("Shooter Speed", 0);
+	double setpoint;
     
     public ShooterSetSetpoint(double setpoint) {
     	super("Shooter Set Setpoint: [" + setpoint + "]");
@@ -39,7 +39,7 @@ public class ShooterSetSetpoint extends Command {
     // Called once after isFinished returns true
     @Override
 	protected void end() {
-    	
+    	Robot.shooter.setTalonSpeed(0);
     }
 
     // Called when another command which requires one or more of the same
