@@ -19,12 +19,13 @@ public interface RobotMap {
 	//Joystick Operator Buttons
 	int HANG_BUTTON = 2;
 	int FASTHANG_BUTTON = 1;
-	int GRAB_BUTTON = 6;
+	int GRAB_BUTTON = 4;
 	int RELEASE_BUTTON = 3;
 	int INTAKE_BUTTON = 7;
-	int GEARDOWN_BUTTON = 4;
-	int GEARUP_BUTTON = 5;
 	int REVERSE = 8;
+	int GEARDOWN_BUTTON = 5;
+	int GEARUP_BUTTON = 6;
+	
 	
 	
 	//Drivetrain motor PWM ports
